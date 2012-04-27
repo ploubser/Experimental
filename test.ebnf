@@ -1,0 +1,19 @@
+create_ebnf do
+  define_statement /.*=.*/
+  define_binary_operators "and,or,not,&&,||"
+  define_unary_operators "!"
+  define_presidence_symbols "(,)"
+
+  define_function_add_as do |x, y|
+    x + y
+  end
+
+  define_function_sub_as do |x,y|
+    x - y
+  end
+
+  define_function_mult_as do |x,y|
+    x * y
+  end
+
+end
