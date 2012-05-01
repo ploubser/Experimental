@@ -1,19 +1,24 @@
 create_ebnf do
-  define_statement /.*=.*/
-  define_binary_operators "and,or,not,&&,||"
-  define_unary_operators "!"
+  define_comparison_operators ["<=",">=","==","<",">"]
+  define_statement /.+(\[.+\])*(#{@comparison_operators.join("|")}).+/
+  define_binary_operators "and,or,&&,||"
+  define_unary_operators "!, not"
   define_presidence_symbols "(,)"
 
-  define_function_add_as do |x, y|
-    x + y
+  define_function_add_as do |*x|
+    x.reduce(0){|x,y| x + y}
   end
 
-  define_function_sub_as do |x,y|
-    x - y
+  define_function_sub_as do |*x|
+    if x.size > 1
+      x.reduce(x.first){|x,y| x - y}
+    else
+      x
+    end
   end
 
-  define_function_mult_as do |x,y|
-    x * y
+  define_function_mult_as do |*x|
+    x.reduce(1){|x,y| x * y}
   end
 
 end
